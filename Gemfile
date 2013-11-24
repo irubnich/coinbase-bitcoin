@@ -33,6 +33,7 @@ group :doc do
 end
 
 gem 'httparty'
+gem 'rails_12factor', group: :production # for heroku
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
