@@ -1,7 +1,5 @@
 <div id="whatis">WHAT'S THE FUCKING<br>PRICE OF BITCOIN?</div>
-<div id="price">
-	FUCKING LOADING HOLD YOUR SHIT...
-</div>
+<div id="price"></div>
 
 <div id="buy">
 	<a href="http://coinbase.com">GO BUY SOME</a>
@@ -12,12 +10,18 @@
 
 <script type="text/javascript">
 	$(function() {
-		$.ajax({
-			url: "/site/price",
-			success: function(data) {
-				var price = parseFloat(data.btc_to_usd).toFixed(2);
-				$("#price").html("GODDAMN SON IT'S FUCKING<br>$" + price);
-			}
-		});
+		function getPrice() {
+			var price = $("#price");
+			price.html("I'M FUCKING UPDATING HOLD YOUR SHIT...");
+			$.ajax({
+				url: "/site/price",
+				success: function(data) {
+					var priceData = parseFloat(data.btc_to_usd).toFixed(2);
+					price.html("GODDAMN SON IT'S FUCKING<br>$" + priceData);
+				}
+			});
+		}
+		getPrice();
+		setInterval(getPrice, 20000);
 	});
 </script>
