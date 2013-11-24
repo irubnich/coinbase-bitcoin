@@ -26,4 +26,6 @@ Coinbase::Application.configure do
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = true
+
+  ENV["REDISTOGO_URL"] = 'redis://redistogo:978b0fb9dc8244b33c789a53fc7fd26d@grideye.redistogo.com:9169'
 end
