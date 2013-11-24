@@ -13,7 +13,7 @@ class SiteController < ApplicationController
 		json = JSON.parse(response.body)
 
 		# set redis
-		REDIS.setex("USD", 20, json["btc_to_usd"])
+		REDIS.setex("USD", 15, json["btc_to_usd"])
 
 		# render
 		render :json => json["btc_to_usd"]
