@@ -3,7 +3,7 @@ $(function() {
 			var price = $("#price");
 			price.html("I'M FUCKING UPDATING HOLD YOUR SHIT...");
 			$.ajax({
-				url: "/site/price",
+				url: "/USD",
 				success: function(data) {
 					// Get date
 					var date = moment();

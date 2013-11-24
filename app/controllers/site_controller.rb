@@ -1,8 +1,13 @@
 class SiteController < ApplicationController
 	def price
+		# set currency
+		unless params.has_key?(:currency)
+			params[:currency] = "USD"
+		end
+
 		# check memory store
-		if REDIS.get("USD")
-			render :json => REDIS.get("USD")
+		if REDIS.get(params[:currency])
+			render :json => REDIS.get(params[:currency])
 			return
 		end
 
@@ -13,10 +18,11 @@ class SiteController < ApplicationController
 		json = JSON.parse(response.body)
 
 		# set redis
-		REDIS.setex("USD", 15, json["btc_to_usd"])
+		currency_lower = params[:currency].downcase
+		REDIS.setex(params[:currency], 15, json["btc_to_" + currency_lower])
 
 		# render
-		render :json => json["btc_to_usd"]
+		render :json => json["btc_to_" + currency_lower]
 	end
 	def index
 	end

@@ -2,6 +2,7 @@ Coinbase::Application.routes.draw do
 
   root 'site#index'
   get 'site/price'
+  get '/:currency' => 'site#price', currency: /[A-Z]{3}/
 
   match "*path" => redirect("/"), via: :all #redirect to root if not found
 
