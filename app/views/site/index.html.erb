@@ -1,0 +1,16 @@
+<div id="whatis">WHAT'S THE FUCKING<br>PRICE OF BITCOIN?</div>
+<div id="price">
+	FUCKING LOADING HOLD YOUR SHIT...
+</div>
+
+<script type="text/javascript">
+	$(function() {
+		$.ajax({
+			url: "/site/price",
+			success: function(data) {
+				var price = parseFloat(data.btc_to_usd).toFixed(2);
+				$("#price").html("GODDAMN SON IT'S FUCKING<br>$" + price);
+			}
+		});
+	});
+</script>
