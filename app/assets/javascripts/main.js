@@ -5,10 +5,16 @@ $(function() {
 			$.ajax({
 				url: "/site/price",
 				success: function(data) {
+					// Get date
 					var date = moment();
+
+					// Parse price
 					var priceData = parseFloat(data).toFixed(2);
+
+					// Set HTML
 					price.html("GODDAMN SON IT'S FUCKING<br>$" + priceData);
 					$("#last-updated span").html(date.format("hh:mm:ss A"));
+					$("title").html("$" + priceData + " | WHAT'S THE FUCKING PRICE OF BITCOIN?");
 				}
 			});
 		}
