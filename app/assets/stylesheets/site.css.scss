@@ -1,7 +1,3 @@
-// Place all the styles related to the Site controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
-
 body {
 	margin-top: 100px;
 	font-family: sans-serif;
@@ -15,4 +11,16 @@ div#whatis {
 
 div#price {
 	margin-top: 40px;
+}
+
+div#buy {
+	margin-top: 40px;
+	font-size: 18px;
+}
+
+div#donate {
+	position: absolute;
+	right: 5px;
+	bottom: 5px;
+	font-size: 10px;
 }

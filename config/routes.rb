@@ -1,8 +1,9 @@
 Coinbase::Application.routes.draw do
 
   root 'site#index'
-  get 'site/index'
   get 'site/price'
+
+  match "*path" => redirect("/"), via: :all #redirect to root if not found
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
