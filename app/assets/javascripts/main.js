@@ -7,6 +7,7 @@ $(function() {
 	// Magic price function
 	getPrice = function(currencyCode) {
 		var price = $("#price span#the-price");
+		var oldValue = parseFloat(price.html());
 		price.html("HOLD YOUR SHIT I'M UPDATING");
 		$.ajax({
 			url: "/" + currencyCode,
@@ -14,8 +15,11 @@ $(function() {
 				// Get date
 				var date = moment();
 
+				// Parse new value
+				var newValue = parseFloat(data);
+
 				// Parse price
-				var priceData = parseFloat(data).toFixed(2).replace(/./g, function(c, i, a) {
+				var priceData = newValue.toFixed(2).replace(/./g, function(c, i, a) {
     				return i && c !== "." && !((a.length - i) % 3) ? "," + c : c;
 				});
 
@@ -26,7 +30,8 @@ $(function() {
 				$("title").html(priceData + " " + currencyCode + " | WHAT'S THE FUCKING PRICE OF BITCOIN?");
 			},
 			error: function() {
-				$("#price").html("SOMETHING WENT FUCKING WRONG. REFRESH THIS PAGE. DO IT!");
+				$("#price").html("SOMETHING WENT FUCKING WRONG.");
+				location.reload();
 			}
 		});
 	}
@@ -47,6 +52,7 @@ $(function() {
 	setInterval(function() {
 		var selectedCurrency = $("#currency")[0].value;
 		getPrice(selectedCurrency);
+		ga('send', 'pageview');
 	}, 20000);
 
 });
