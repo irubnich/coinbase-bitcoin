@@ -8,6 +8,12 @@ class SiteController < ApplicationController
 			params[:currency] = "USD"
 		end
 
+		# make sure currency is in the allowed array
+		unless CURRENCIES.include?(params[:currency])
+			render :json => nil
+			return
+		end
+
 		# check memory store
 		if REDIS.get(params[:currency])
 			render :json => REDIS.get(params[:currency])
@@ -23,6 +29,9 @@ class SiteController < ApplicationController
 		# set redis
 		currency_lower = params[:currency].downcase
 		REDIS.setex(params[:currency], 10, json["btc_to_" + currency_lower])
+
+		# insert data
+		p = Price.create({ currency: params[:currency], value: json["btc_to_" + currency_lower] })
 
 		# render
 		render :json => json["btc_to_" + currency_lower]
