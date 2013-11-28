@@ -1,7 +1,10 @@
 $(function() {
 
 	var expletives = [
-		"GODDAMN SON IT'S FUCKING"
+		"GODDAMN SON IT'S FUCKING",
+		"HOLY SHIT IT'S FUCKING",
+		"SWEET JESUS IT'S FUCKING",
+		"GET THE FUCK OUT OF HERE IT'S"
 	];
 
 	// Magic price function
@@ -24,7 +27,7 @@ $(function() {
 				});
 
 				// Set HTML
-				$("span#expletive").html(expletives[0]);
+				$("span#expletive").html(expletives[Math.floor(Math.random()*expletives.length)]);
 				price.html(priceData);
 				$("#last-updated span").html(date.format("hh:mm:ss A"));
 				$("title").html(priceData + " " + currencyCode + " | WHAT'S THE FUCKING PRICE OF BITCOIN?");
