@@ -28,7 +28,7 @@ class SiteController < ApplicationController
 
 		# set redis
 		currency_lower = params[:currency].downcase
-		REDIS.setex(params[:currency], 10, json["btc_to_" + currency_lower])
+		REDIS.setex(params[:currency], 5, json["btc_to_" + currency_lower])
 
 		# insert data
 		p = Price.create({ currency: params[:currency], value: json["btc_to_" + currency_lower] })

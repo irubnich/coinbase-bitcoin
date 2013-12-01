@@ -56,6 +56,6 @@ $(function() {
 		var selectedCurrency = $("#currency")[0].value;
 		getPrice(selectedCurrency);
 		ga('send', 'pageview');
-	}, 20000);
+	}, 5000);
 
 });
