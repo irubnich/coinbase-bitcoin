@@ -30,9 +30,6 @@ class SiteController < ApplicationController
 		currency_lower = params[:currency].downcase
 		REDIS.setex(params[:currency], 5, json["btc_to_" + currency_lower])
 
-		# insert data
-		p = Price.create({ currency: params[:currency], value: json["btc_to_" + currency_lower] })
-
 		# render
 		render :json => json["btc_to_" + currency_lower]
 	end
