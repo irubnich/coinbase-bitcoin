@@ -15,6 +15,15 @@ $(function() {
 		$.ajax({
 			url: "/" + currencyCode,
 			success: function(data) {
+				// Check for some problem...
+				if(data.error) {
+					$("#price").html("SHIT, COINBASE FUCKED UP...");
+					setInterval(function() {
+						location.reload();
+					}, 10000);
+					return;
+				}
+
 				// Get date
 				var date = moment();
 

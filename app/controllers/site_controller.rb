@@ -24,7 +24,12 @@ class SiteController < ApplicationController
 		response = HTTParty.get('https://coinbase.com/api/v1/currencies/exchange_rates')
 
 		# parse
-		json = JSON.parse(response.body)
+		begin
+			json = JSON.parse(response.body)
+		rescue
+			json = { error: "Could not parse response..." }.to_json
+			return render :json => json
+		end
 
 		# set redis
 		currency_lower = params[:currency].downcase
