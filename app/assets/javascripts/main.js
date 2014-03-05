@@ -11,7 +11,6 @@ $(function() {
 	getPrice = function(currencyCode) {
 		var price = $("#price span#the-price");
 		var oldValue = parseFloat(price.html());
-		price.html("HOLD YOUR SHIT I'M UPDATING");
 		$.ajax({
 			url: "/" + currencyCode,
 			success: function(data) {
@@ -42,8 +41,7 @@ $(function() {
 				$("title").html(priceData + " " + currencyCode + " | WHAT'S THE FUCKING PRICE OF BITCOIN?");
 			},
 			error: function() {
-				$("#price").html("SOMETHING WENT FUCKING WRONG.");
-				location.reload();
+				$("#price").html("SOMETHING WENT FUCKING WRONG. REFRESH THE PAGE. DO IT!");
 			}
 		});
 	}
@@ -65,6 +63,6 @@ $(function() {
 		var selectedCurrency = $("#currency")[0].value;
 		getPrice(selectedCurrency);
 		ga('send', 'pageview');
-	}, 5000);
+	}, 10000);
 
 });
