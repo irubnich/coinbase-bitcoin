@@ -15,3 +15,13 @@
 //= require jquery.customSelect.min
 //= require moment
 //= require_tree .
+
+Array.prototype.random = function() {
+	return this[Math.floor(Math.random() * this.length)];
+}
+
+Number.prototype.toPrice = function() {
+	return this.valueOf().toFixed(2).replace(/./g, function(c, i, a) {
+		return i && c !== "." && !((a.length - i) % 3) ? "," + c : c;
+	});
+}

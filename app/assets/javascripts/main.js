@@ -9,10 +9,6 @@ var HMIAFB = {
 
 	getPrice: function(code) {
 		this.currencyCode = code;
-		this.sendRequest();
-	},
-
-	sendRequest: function() {
 		$.ajax({
 			url: "/" + this.currencyCode,
 			success: this.updateSite.bind(this),
@@ -38,16 +34,12 @@ var HMIAFB = {
 		// Get date
 		var date = moment();
 
-		// Parse new value
+		// Parse new price
 		var newValue = parseFloat(data);
-
-		// Parse price
-		var priceData = newValue.toFixed(2).replace(/./g, function(c, i, a) {
-			return i && c !== "." && !((a.length - i) % 3) ? "," + c : c;
-		});
+		var priceData = newValue.toPrice();
 
 		// Set HTML
-		$("span#expletive").html(this.expletives[Math.floor(Math.random()*this.expletives.length)]);
+		$("span#expletive").html(this.expletives.random());
 		price.html(priceData);
 		$("#last-updated span").html(date.format("hh:mm:ss A"));
 		$("title").html(priceData + " " + this.currencyCode + " | WHAT'S THE FUCKING PRICE OF BITCOIN?");
