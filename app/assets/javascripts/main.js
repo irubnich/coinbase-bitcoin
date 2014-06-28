@@ -1,18 +1,23 @@
-$(function() {
-
-	var expletives = [
+var HMIAFB = {
+	currencyCode: "USD",
+	expletives: [
 		"GODDAMN SON IT'S FUCKING",
 		"HOLY SHIT IT'S FUCKING",
 		"SWEET JESUS IT'S FUCKING",
 		"GET THE FUCK OUT OF HERE IT'S"
-	];
+	],
 
-	// Magic price function
-	getPrice = function(currencyCode) {
+	getPrice: function(code) {
+		this.currencyCode = code;
+		this.sendRequest();
+	},
+
+	sendRequest: function() {
 		var price = $("#price span#the-price");
 		var oldValue = parseFloat(price.html());
+
 		$.ajax({
-			url: "/" + currencyCode,
+			url: "/" + this.currencyCode,
 			success: function(data) {
 				// Check for some problem...
 				if(data.error) {
@@ -35,34 +40,36 @@ $(function() {
 				});
 
 				// Set HTML
-				$("span#expletive").html(expletives[Math.floor(Math.random()*expletives.length)]);
+				$("span#expletive").html(this.expletives[Math.floor(Math.random()*this.expletives.length)]);
 				price.html(priceData);
 				$("#last-updated span").html(date.format("hh:mm:ss A"));
-				$("title").html(priceData + " " + currencyCode + " | WHAT'S THE FUCKING PRICE OF BITCOIN?");
-			},
+				$("title").html(priceData + " " + this.currencyCode + " | WHAT'S THE FUCKING PRICE OF BITCOIN?");
+			}.bind(this),
 			error: function() {
 				$("#price").html("SOMETHING WENT FUCKING WRONG. REFRESH THE PAGE. DO IT!");
 			}
 		});
 	}
+};
 
+// Get money get paid
+$(function() {
 	// Select box
 	$('#currency').customSelect();
 
 	// Events
 	$("#currency").change(function() {
-		getPrice(this.value);
+		HMIAFB.getPrice(this.value);
 	});
 
 	// Initial go
 	var selectedCurrency = $("#currency")[0].value;
-	getPrice(selectedCurrency);
+	HMIAFB.getPrice(selectedCurrency);
 
 	// Interval
 	setInterval(function() {
 		var selectedCurrency = $("#currency")[0].value;
-		getPrice(selectedCurrency);
+		HMIAFB.getPrice(selectedCurrency);
 		ga('send', 'pageview');
 	}, 10000);
-
 });
