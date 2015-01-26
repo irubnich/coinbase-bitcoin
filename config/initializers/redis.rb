@@ -1,5 +1,5 @@
 if Rails.env.production?
-	REDIS = Redis.connect(:url => ENV["REDISTOGO_URL"], :password => ENV["REDISTOGO_PASS"])
+	REDIS = Redis.connect(:url => ENV["REDISTOGO_URL"])
 else
 	REDIS = Redis.connect
 end
