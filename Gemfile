@@ -25,7 +25,10 @@ group :doc do
   gem 'sdoc', require: false
 end
 
-gem 'httparty'
+group :test, :development do
+  gem 'pry'
+end
+
 gem 'rails_12factor', group: :production
 gem 'momentjs-rails'
 gem 'redis'
