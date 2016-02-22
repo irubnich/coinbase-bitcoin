@@ -11,33 +11,25 @@ class SiteController < ApplicationController
 
 		# make sure currency is in the allowed array
 		unless CURRENCIES.include?(params[:currency])
-			render json: nil
-			return
+			return render json: nil
 		end
 
-		# check memory store
-		if REDIS.get(params[:currency])
-			render json: REDIS.get(params[:currency])
-			return
+		result = Rails.cache.fetch(params[:currency].downcase, expires_in: 10.seconds) do |key|
+			# get whole enchilada
+			uri = URI("https://coinbase.com/api/v1/currencies/exchange_rates")
+			response = Net::HTTP.get(uri)
+
+			# parse
+			begin
+				json = JSON.parse(response)
+			rescue
+				return render json: { error: "Could not parse response..." }
+			end
+
+			json["btc_to_" + key]
 		end
 
-		# get whole enchilada
-		uri = URI("https://coinbase.com/api/v1/currencies/exchange_rates")
-		response = Net::HTTP.get(uri)
-
-		# parse
-		begin
-			json = JSON.parse(response)
-		rescue
-			return render json: { error: "Could not parse response..." }
-		end
-
-		# set redis
-		currency_lower = params[:currency].downcase
-		REDIS.setex(params[:currency], 10, json["btc_to_" + currency_lower])
-
-		# render
-		render json: json["btc_to_" + currency_lower]
+		return render json: result
 	end
 
 	def index

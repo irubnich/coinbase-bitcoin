@@ -31,7 +31,7 @@ end
 
 gem 'rails_12factor', group: :production
 gem 'momentjs-rails'
-gem 'redis'
+gem 'redis-rails'
 
 gem 'newrelic_rpm'
 
