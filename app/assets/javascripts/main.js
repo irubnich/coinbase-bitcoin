@@ -32,7 +32,7 @@ var HMIAFB = {
 		}
 
 		// Get date
-		var date = moment();
+		var date = new Date();
 
 		// Parse new price
 		var newValue = parseFloat(data);
@@ -41,29 +41,27 @@ var HMIAFB = {
 		// Set HTML
 		$("span#expletive").html(this.expletives.random());
 		price.html(priceData);
-		$("#last-updated span").html(date.format("hh:mm:ss A"));
+		$("#last-updated span").html(date.toString());
 		$("title").html(priceData + " " + this.currencyCode + " | WHAT'S THE FUCKING PRICE OF BITCOIN?");
+	},
+
+	getPriceForSelection: function(field) {
+		var selectedCurrency = field.val();
+		HMIAFB.getPrice(selectedCurrency);
 	}
 };
 
 // Get money get paid
 $(function() {
-	// Select box
-	$('#currency').customSelect();
+	var field = $("#currency");
+	field.customSelect();
 
-	// Events
-	$("#currency").change(function() {
-		HMIAFB.getPrice(this.value);
-	});
+	HMIAFB.getPriceForSelection(field);
+	field.change(HMIAFB.getPriceForSelection.bind(this, field));
 
-	// Initial go
-	var selectedCurrency = $("#currency")[0].value;
-	HMIAFB.getPrice(selectedCurrency);
-
-	// Interval
+	// Polling
 	setInterval(function() {
-		var selectedCurrency = $("#currency")[0].value;
-		HMIAFB.getPrice(selectedCurrency);
+		HMIAFB.getPriceForSelection(field);
 		ga('send', 'pageview');
 	}, 10000);
 });

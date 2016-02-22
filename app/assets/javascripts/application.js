@@ -13,7 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.customSelect.min
-//= require moment
 //= require_tree .
 
 Array.prototype.random = function() {
